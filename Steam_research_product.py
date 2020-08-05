@@ -28,10 +28,10 @@ for cat in categories:
             master_df = pd.merge(master_df,new_csv,how='outer')
         file_number = 1
     
+master_df.dropna(subset=['Players', 'Twitch Viewers'],how='all', inplace=True)
+#master_df.fillna(0, inplace=True)
 
-master_df.fillna(0, inplace=True)
-
-
+games_list = master_df['Game_name'].unique()
 
 def corr_between_games(game_a,game_b):
     # Filter equal dates
@@ -54,16 +54,13 @@ def corr_between_games(game_a,game_b):
     
     moving_corr_df.reset_index(inplace=True)
     
-    # moving_corr_df.set_index('name', inplace = True)
+
     
     result = moving_corr_df[moving_corr_df['level_1']=='Players_x']['Players_y'].tail(360)
-    
-    
-    
-    #result = comum_df.corr()
-     
+
     print(result)
     
+    # moving_corr_df.set_index('name', inplace = True)
     #result_2 = seasonal_decompose(result.dropna(), model='additive', freq=1)
     
     # Plotting dataframes
@@ -71,15 +68,47 @@ def corr_between_games(game_a,game_b):
     comum_df[['DateTime','Players_x','Players_y']].plot('DateTime')
     a_df.plot('DateTime','Players')
     b_df.plot('DateTime','Players')
-    
-    #result_2.plot()
     plt.show()
-    
+  
     result.plot()
     plt.show()
+    
 
-corr_between_games('dota2','poe')
+def corr_players_twitchviewers(df,graphs):
+    for game in games_list:
+        temp_df = df[df['Game_name']==game][['DateTime','Players', 'Twitch Viewers']]
+        temp_df.dropna(subset=['Players', 'Twitch Viewers'],inplace=True)
+        moving_corr_df = temp_df[['Players','Twitch Viewers']].rolling(30).corr()
+        moving_corr_df.reset_index(inplace=True)
+        result = moving_corr_df[moving_corr_df['level_1']=='Players']['Twitch Viewers']
+        corr_list.extend(result.values)
+        
+        if graphs:
+            # Plot Game correlation timeserie
+            result.plot()
+            # plt.figure(figsize=(16,5), dpi=dpi)
+            # plt.plot(x, y, color='tab:red')
+            plt.gca().set(title=game)
+            plt.show()
+    
+    return corr_list
 
-print(master_df['Game_name'].unique())
+        
+# corr_between_games('skyrim','poe')
+corr_list = []
+corr_list = corr_players_twitchviewers(master_df,graphs=False)
 
 
+# AHAH t distr as 11.40pm
+mean_corr = np.mean(corr_list)
+s_std = np.std(corr_list)
+
+t_dist = stats.t(df = len(corr_list)-1, loc = mean_corr, scale = s_std/np.sqrt(len(corr_list)))
+lower, upper = t_dist.interval(0.99)
+print(lower)
+print(upper)
+# print(corr_list)
+
+print(games_list)
+
+# print(master_df.tail(10))
