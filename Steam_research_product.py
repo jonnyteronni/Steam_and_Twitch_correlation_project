@@ -150,7 +150,7 @@ def corr_players_twitchviewers(df,games_list,graphs):
             plt.gca().set(title='Impact of Twitch viewers in game {} player base'.format(game))
             plt.show()
     
-    return corr_list
+
 
 
 
@@ -165,7 +165,9 @@ def get_streamer_to_steam(date,game,streamer_df,streamer):
 def merge_streamer_steam(steam_df,streamer_df,streamer, graphs):
     
     streamer_df = streamer_df[streamer_df['Streamer_name']==streamer]
+    # temp_games_list = streamer_df['Games_name']
     
+    # steam_df = steam_df[steam_df['Game_name'].str.contains(temp_games_list,regex=False)]
     steam_df['temp']  = steam_df[['DateTime','Game_name']].apply(lambda x:get_streamer_to_steam(x['DateTime'],x['Game_name'],streamer_df,streamer),axis = 1)
     
     steam_df['Streamer'] = None
@@ -193,12 +195,12 @@ def corr_streamer_steam(df,graphs,streamer,game):
         
         # Plotting
         df.plot(x ='DateTime', y='Moving_corr',label="30 days moving correlation",color='black')
-        #plt.annotate('Local Max',xy=('2019-07-05',df['Moving_corr'].tail(1).values))
-        plt.axhline(y=lower_qt, color='red',xmin =0.02, xmax = 0.98, label="Lower quartile")
-        plt.axhline(y=median, color='yellow',xmin =0.02, xmax = 0.98,label="Median")
-        plt.axhline(y=upper_qt, color='green',xmin =0.02, xmax = 0.98,label="Upper quartile")
-        plt.gca().set(title='Impact of streamer {} in game {}'.format(streamer,game))
-        plt.show()
+       
+        # plt.axhline(y=lower_qt, color='red',xmin =0.02, xmax = 0.98, label="Lower quartile")
+        # plt.axhline(y=median, color='yellow',xmin =0.02, xmax = 0.98,label="Median")
+        # plt.axhline(y=upper_qt, color='green',xmin =0.02, xmax = 0.98,label="Upper quartile")
+        # plt.gca().set(title='Impact of channel {} in game {}'.format(streamer,game))
+        # plt.show()
         
     return df
 
@@ -219,13 +221,12 @@ streamer_df, streamers_list = get_streamers_dataframe(streamers)
 steam_corr_df = merge_streamer_steam(steam_df,streamer_df,streamer = 'ESL_CSGO',graphs = False)
 # steam_streamer_corr_df = corr_streamer_steam(steam_corr_df,graphs=True,streamer = 'dota2ruhub', game = 'Dota 2')
 steam_streamer_corr_df = corr_streamer_steam(steam_corr_df,graphs=True,streamer = 'ESL_CSGO', game = 'Counter-Strike: Global Offensive')
-
+#'Counter-Strike: Global Offensive'
 
 # 2
 corr_between_games('PRO EVOLUTION SOCCER 2019','eFootball PES 2020',steam_df)
-
+corr_between_games("PLAYERUNKNOWN'S BATTLEGROUNDS",'DayZ',steam_df)
 
 # 3 Correlation between player count and twitch viewers
-corr_list = []
-corr_list = corr_players_twitchviewers(steam_df,games_steam_list,graphs=True)
+corr_players_twitchviewers(steam_df,games_steam_list,graphs=True)
 
