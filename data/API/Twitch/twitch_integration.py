@@ -1,16 +1,16 @@
 import requests, json
 
 BASE_URL = 'https://api.twitch.tv/helix/'
-# HEADERS = {'Client-ID': 'r0ay47cwvzojw6yh55qojmy9nq14kx'}
-HEADERS = {'0Auth': 'lvzyj81mvg770cz8ab4ttfcncwgqw2'}
+HEADERS = {
+    'Client-ID': '5cz0yhsd4m6yqrzcd5t62d09wdbtn7',
+    'Authorization': 'Bearer lvzyj81mvg770cz8ab4ttfcncwgqw2'}
 INDENT = 2
 
-teste = {'Authorization': '0Auth ' 'lvzyj81mvg770cz8ab4ttfcncwgqw2'}
 
 # get response from twitch API call
 def get_response(query):
   url  = BASE_URL + query
-  response = requests.get(url, headers=teste)
+  response = requests.get(url, headers=HEADERS)
   return response
 
 # used for debugging the result
