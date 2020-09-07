@@ -1,13 +1,13 @@
 # Steam_games_statistical_project
 
 ### Date created
-TBD
+August 2020
 
 ### Project Title
-TBD
+Steam$
 
 ### Description
-TBD
+Statistical project with the goal of understanding the several possible reasons that can impact one game's player base.
 
 ![Screenshot](img/Steam$.jpg)
 
