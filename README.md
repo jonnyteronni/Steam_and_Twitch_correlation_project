@@ -6,7 +6,7 @@ TBD
 ### Project Title
 TBD
 
-![Screenshot](Steam$.jpg)
+![Screenshot](img/Steam$.jpg)
 
 
 ### Description
