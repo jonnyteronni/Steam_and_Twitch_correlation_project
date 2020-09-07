@@ -6,10 +6,7 @@ TBD
 ### Project Title
 TBD
 
-
-![alt text](https://github.com/[jonnyteronni]/[Steam_and_Twitch_correlation_project]/img/[Master]/Steam$.jpb?raw=true)
-
-![alt text](https://github.com/[jonnyteronni]/[Steam_and_Twitch_correlation_project]/img/[Master]/Twitch_impact.jpg?raw=true)
+![Screenshot](Steam$.jpg)
 
 
 ### Description
