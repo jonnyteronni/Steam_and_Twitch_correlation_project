@@ -7,7 +7,7 @@ August 2020
 Steam$
 
 ### Description
-Statistical project with the goal of understanding the several possible reasons that can impact one game's player base.
+Statistical project with the goal of understanding the several possible reasons that can impact one Steam game's player base.
 
 ![Screenshot](img/Steam$.jpg)
 
